@@ -5,7 +5,9 @@
 const CONFIG = {
   // 라벨 및 이메일 설정
   PROCESSED_LABEL: 'ATS-processed',
+  SOURCING_LABEL: 'sourcing',
   GROUP_EMAIL: 'gigs@kmong.com',
+  MY_EMAIL: 'alpha@kmong.com',
   
   // 구글 시트 ID 설정
   DB_SHEET_ID: '1_L29sQpyortIf8xNlW8mOsWWsJ44PWobWAuuDoX0UdU',
