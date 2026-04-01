@@ -13,8 +13,7 @@ function processGroupEmailBatch() {
   }
   
   // 대기 라벨이 붙은 스레드 가져오기
-  const threads = groupPendingLabel.getThreads(0, 20); 
-  
+  const threads = groupPendingLabel.getThreads(0, 20);
   if (threads.length === 0) {
     Logger.log("요약할 새로운 그룹 메일이 없습니다.");
     return;
@@ -29,7 +28,7 @@ function processGroupEmailBatch() {
     const subject = msg.getSubject();
     const msgId = msg.getId();
     
-    // ⭐️ [추가] 수신 시간 추출 및 포맷팅
+    // 수신 시간 추출 및 포맷팅
     const date = msg.getDate();
     const timeStr = Utilities.formatDate(date, Session.getScriptTimeZone(), "HH:mm");
     
@@ -46,17 +45,17 @@ ${fullBody}
 ---
 `;
   });
-  
-  // 2. Claude Sonnet 4.5 에 요약 요청
-  Logger.log("Sonnet 4.5 모델에 브리핑 요약을 요청합니다... (시간 흐름 및 강도 높은 필터링 적용)");
-  const summaryResult = generateGroupSummaryWithSonnet(emailsTextData);
+
+  // 2. ⭐️ Claude Haiku 4.5 에 요약 요청 (함수명 변경)
+  Logger.log("Haiku 4.5 모델에 브리핑 요약을 요청합니다... (비용 최적화 적용)");
+  const summaryResult = generateGroupSummaryWithHaiku(emailsTextData);
   
   if (summaryResult) {
     // 3. 슬랙 발송
     const slackMsg = `*🕒 [정기 브리핑] 그룹 메일 요약 도착*\n총 ${threads.length}개의 그룹 메일 흐름을 분석했습니다.\n\n${summaryResult}`;
-    const finalSlackMsg = slackMsg.replaceAll('**', '*'); // 완성된 데이터를 담는 새로운 상자
+    const finalSlackMsg = slackMsg.replaceAll('**', '*'); 
     sendToSlack(finalSlackMsg, threads[0].getMessages()[0].getId());
-    
+
     // 4. 처리 완료 처리
     const processedLabel = GmailApp.getUserLabelByName(CONFIG.PROCESSED_LABEL);
     threads.forEach(thread => {
