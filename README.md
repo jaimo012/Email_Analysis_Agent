@@ -11,9 +11,10 @@
 
 ## 🛠 기술 스택 및 모델 구성
 * **Engine**: Google Apps Script (GAS)
-* **AI Models (Claude 4.5 라인업)**:
-  * **Claude Sonnet 4.5** (`claude-sonnet-4-5-20250929`): 고도의 문맥 파악, 자연스러운 답장 생성, 시간 흐름 기반 그룹 메일 브리핑 전담.
-  * **Claude Haiku 4.5** (`claude-haiku-4-5-20251001`): 초고속 텍스트 스캐닝, 3단 카테고리(스팸/소싱/일반) 분류 전담.
+* **AI Models**:
+  * 🟢 **Gemini 2.5 Flash** (`gemini-2.5-flash`): 압도적인 가성비를 활용하여 미읽음 메일의 카테고리(스팸/소싱/일반)를 초고속으로 스캐닝하고 1차 분류합니다.
+  * 🟡 **Claude Haiku 4.5** (`claude-haiku-4-5-20251001`): 빠르고 효율적인 지능을 활용하여, 대량의 그룹 메일을 분석하고 핑퐁 흐름 및 특이사항(🚨)을 요약 브리핑합니다.
+  * 🔴 **Claude Sonnet 4.5** (`claude-sonnet-4-5-20250929`): 가장 높은 지능이 요구되는 작업인 '나의 이메일 문체(Style)'를 모방한 자연스러운 답장 초안 생성에 집중 투자됩니다.
 * **Integrations**: Gmail API, Slack Webhook, Google Sheets
 
 ## 📂 파일 구조 및 역할
