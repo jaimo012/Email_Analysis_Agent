@@ -5,7 +5,11 @@
 function processNewEmails() {
   Logger.log("메일 확인 루틴 시작...");
   
-  const query = `is:unread in:inbox -label:${CONFIG.PROCESSED_LABEL}`;
+  // ⭐️ 검색 조건 업데이트: 프로모션/소셜 제외, 2026-04-01 이후, 미읽음, 라벨 없음
+  // (참고: after:2026/03/31 로 설정해야 타임존 문제 없이 4월 1일 메일이 안전하게 포함됩니다)
+  const query = `is:unread in:inbox -category:promotions -category:social after:2026/03/31 -label:${CONFIG.PROCESSED_LABEL}`;
+  
+  // 변경된 쿼리로 메일을 검색합니다.
   const threads = GmailApp.search(query, 0, 10);
   
   if (threads.length === 0) {
