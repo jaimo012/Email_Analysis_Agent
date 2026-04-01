@@ -1,5 +1,5 @@
 /**
- * 2_Step0_StyleAnalysis
+ * 2_Step0_StyleAnalysis.gs
  * [Step 0] 내 이메일 스타일과 유형을 분석하는 메인 함수 (최초 1회 수동 실행)
  */
 function analyzeMyEmailStyle() {
@@ -24,11 +24,27 @@ function analyzeMyEmailStyle() {
     return;
   }
   
-  // 3. 분석 결과를 Script Properties(비밀 금고)에 저장 
+  // 3. 분석 결과를 Script Properties(비밀 금고)에 저장 (시스템 연동용)
   PropertiesService.getScriptProperties().setProperty('MY_EMAIL_STYLE', styleGuideResult);
   
-  Logger.log("🎉 분석이 완료되었습니다! 아래는 생성된 스타일 가이드입니다:\n");
-  Logger.log(styleGuideResult);
+  // ⭐️ 4. [신규 추가] 사용자가 직접 보고 수정할 수 있도록 구글 시트에 저장
+  const ss = SpreadsheetApp.openById(CONFIG.DB_SHEET_ID);
+  let styleSheet = ss.getSheetByName('스타일_가이드');
+  
+  // 시트가 없으면 새로 생성합니다.
+  if (!styleSheet) {
+    styleSheet = ss.insertSheet('스타일_가이드');
+  }
+  
+  // 기존 내용을 깔끔하게 지우고 새 결과물을 덮어씁니다.
+  styleSheet.clear(); 
+  
+  // 안내 문구와 결과물 입력
+  styleSheet.getRange("A1").setValue("💡 이메일 스타일 가이드 (시스템이 이 내용을 바탕으로 초안을 작성합니다. 자유롭게 수정하세요!)");
+  styleSheet.getRange("A1").setFontWeight("bold");
+  styleSheet.getRange("A2").setValue(styleGuideResult);
+  
+  Logger.log("🎉 분석이 완료되었습니다! 구글 시트의 [스타일_가이드] 탭을 확인해주세요.");
 }
 
 
@@ -54,7 +70,6 @@ function getRecentSentEmails(monthsAgo, maxCount) {
       body: msg.getPlainBody().slice(0, 500) // 500자까지만 자르기 
     };
   });
-  
   return samples;
 }
 
