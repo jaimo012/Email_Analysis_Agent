@@ -6,6 +6,7 @@ const CONFIG = {
   // 라벨 및 이메일 설정
   PROCESSED_LABEL: 'ATS-processed',
   SOURCING_LABEL: 'sourcing',
+  GROUP_PENDING_LABEL: 'ATS-group-pending',
   GROUP_EMAIL: 'gigs@kmong.com',
   MY_EMAIL: 'alpha@kmong.com',
   
